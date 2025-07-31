@@ -1,0 +1,16 @@
+# Bytecode
+__pycache__/
+*.py[cod]
+
+# Editor
+.idea/
+
+# OS
+.DS_Store
+
+# uv package manager
+__pypackages__/
+uv.lock
+
+# venv
+.venv/
