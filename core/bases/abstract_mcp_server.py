@@ -1,5 +1,6 @@
 import inspect
 from abc import ABCMeta
+from typing import Any
 
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
@@ -46,15 +47,10 @@ class AbstractMcpServer(metaclass=ABCMeta):
 
         @self.server.list_resources()
         async def list_resources() -> list[Resource]:
-            # TODO: resources, prompts 혹은 추가적인 primitives 들 handler 관련 부분 이와 같이 등록 되도록 관리
-            # custom한 구조로 우선 package based architecture(PBA) 이라고 명명
-            # 추가 작업들이 마무리 된 후 다시 여기 관련 작업 수행하자
-            # define kinda api specs
             pass
 
         @self.server.read_resource()
         async def read_resource(uri: AnyUrl) -> str:
-            # kinda view methods
             pass
 
         @self.server.list_tools()
@@ -63,7 +59,7 @@ class AbstractMcpServer(metaclass=ABCMeta):
             return [tool.spec() for _, tool in tool_cls if issubclass(tool, AbstractTool)]
 
         @self.server.call_tool()
-        async def call_tool(name: str, kwargs: dict) -> list[TextContent | ImageContent | EmbeddedResource]:
+        async def call_tool(name: str, kwargs: dict) -> Any:
             tool: AbstractTool = getattr(self.tools, strutil.snake_to_pascal(name), None)
             if tool:
                 return await tool.execute(**kwargs)  # must handle arg error -> generate custom exception to handle it
@@ -74,13 +70,13 @@ class AbstractMcpServer(metaclass=ABCMeta):
 
     async def run(self):
         self.set_handlers()
-        print(ANSIStyler.style(f"MCP-{self.__class__.__name__} now running!",
-                               fore_color='light-blue',
-                               font_style='bold'
-                               ))
-        print(ANSIStyler.style(str(self.create_initialization_options().model_dump_json(indent=2, exclude_none=True)),
-                               fore_color='yellow'
-                               ))
+        # print(ANSIStyler.style(f"MCP-{self.__class__.__name__} now running!",  # useless with stdio transport
+        #                        fore_color='light-blue',
+        #                        font_style='bold'
+        #                        ))
+        # print(ANSIStyler.style(str(self.create_initialization_options().model_dump_json(indent=2, exclude_none=True)),
+        #                        fore_color='yellow'
+        #                        ))
         async with stdio_server() as (read_stream, write_stream):
             await self.server.run(
                 read_stream,
