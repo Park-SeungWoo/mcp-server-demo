@@ -1,0 +1,9 @@
+class DBAdaptor:
+    def __init__(self):
+        ...
+
+    def __connect(self):
+        ...
+
+    def query(self, query):
+        ...
