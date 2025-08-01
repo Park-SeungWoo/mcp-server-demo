@@ -3,6 +3,7 @@ from abc import ABCMeta
 
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
+from mcp.server.models import InitializationOptions
 from mcp.types import Prompt, Resource, Tool, TextContent, ImageContent, EmbeddedResource, GetPromptResult
 from pydantic import AnyUrl
 
@@ -22,7 +23,7 @@ class AbstractMcpServer(metaclass=ABCMeta):
         from pathlib import Path
         import sys
 
-        base_path = Path(__file__).parent.absolute()  # TODO: abstract class 정의된 파일의 위치를 참조하는 문제 해결
+        base_path = Path(inspect.getfile(self.__class__)).parent.absolute()
         try:
             sys.path.append(str(base_path))
 
@@ -68,11 +69,21 @@ class AbstractMcpServer(metaclass=ABCMeta):
                 return await tool.execute(**kwargs)  # must handle arg error -> generate custom exception to handle it
             raise ToolNotExistException(name)
 
+    def create_initialization_options(self) -> InitializationOptions:
+        return self.server.create_initialization_options()
+
     async def run(self):
-        print(ANSIStyler.style(f"MCP-{self.__class__.__name__} now running!", fore_color='light-blue'))
+        self.set_handlers()
+        print(ANSIStyler.style(f"MCP-{self.__class__.__name__} now running!",
+                               fore_color='light-blue',
+                               font_style='bold'
+                               ))
+        print(ANSIStyler.style(str(self.create_initialization_options().model_dump_json(indent=2, exclude_none=True)),
+                               fore_color='yellow'
+                               ))
         async with stdio_server() as (read_stream, write_stream):
             await self.server.run(
                 read_stream,
                 write_stream,
-                self.server.create_initialization_options()
+                self.create_initialization_options()
             )
