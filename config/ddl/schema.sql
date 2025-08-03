@@ -14,7 +14,8 @@ CREATE TABLE apis
     FOREIGN KEY (url_id) REFERENCES urls(id)
 );
 CREATE TABLE schemas (
-    api_id INT PRIMARY KEY ,  -- FK(1to1) -> apis
+    api_id INT PRIMARY KEY,  -- FK(1to1) -> apis
+    type TEXT,
     FOREIGN KEY (api_id) REFERENCES apis(id) ON DELETE CASCADE
 );
 CREATE TABLE fields (
