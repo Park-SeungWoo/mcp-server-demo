@@ -5,11 +5,18 @@ import inspect
 import servers
 from core.bases import AbstractMcpServer
 from core.utils.ansi_styler import ANSIStyler
-from servers.local.file_server.server import FileServer
-from servers.local.db_server.server import DBServer
 
-SERVER_CLS: dict[str, type] = {k: v for k, v in inspect.getmembers(servers, inspect.isclass)}
-AVAIL_SERVER_OPTIONS: list[str] = [server.__name__ for server in SERVER_CLS.values() if issubclass(server, AbstractMcpServer)]
+SERVER_CLS: dict[str, type] = {
+    k: v
+    for k, v
+    in inspect.getmembers(servers, inspect.isclass)
+}
+AVAIL_SERVER_OPTIONS: list[str] = [
+    server.__name__
+    for server in SERVER_CLS.values()
+    if issubclass(server, AbstractMcpServer)
+]
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Select a MCP server to start')
