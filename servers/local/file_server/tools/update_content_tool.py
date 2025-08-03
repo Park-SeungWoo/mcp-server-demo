@@ -42,7 +42,6 @@ class UpdateContentTool(AbstractTool):
     # @override
     @staticmethod
     async def execute(file_name: str, content: str) -> Any:
-        prev: str = ''
         with open(file_name, 'r') as f:
             prev = '\n'.join(f.readlines())
         with open(file_name, 'w') as f:
