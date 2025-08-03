@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "local-db server",
+      "Group": "demo_server_groups",
+      "Host": "local-db",
+      "Port": 5432,
+      "MaintenanceDB": "demo",
+      "Username": "jeremy",
+      "PassFile": "/pgpass",
+      "SSLMode": "prefer"
+    }
+  }
+}
