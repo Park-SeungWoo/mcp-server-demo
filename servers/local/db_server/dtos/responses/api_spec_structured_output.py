@@ -7,6 +7,7 @@ class ApiSpecDto(BaseModel):
     endpoints: list['EndpointSpecDto']
 
 class EndpointSpecDto(BaseModel):
+    key: str
     method: str
     path: str
     description: str

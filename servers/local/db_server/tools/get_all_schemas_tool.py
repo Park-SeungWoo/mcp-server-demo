@@ -61,6 +61,7 @@ class GetAllSchemasTool(AbstractTool):
                 )
                 endpoints.append(
                     EndpointSpecDto(
+                        key=api.key,
                         method=api.method,
                         path=api.path,
                         description=api.description,

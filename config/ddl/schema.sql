@@ -8,6 +8,7 @@ CREATE TABLE apis
 (
     id          INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     url_id      INT, -- FK(1toN) -> urls
+    "key"       TEXT UNIQUE,
     path        TEXT,
     method      TEXT,
     description TEXT,
@@ -31,8 +32,8 @@ CREATE TABLE fields
 -- add test data
 INSERT INTO urls (url, description)
 VALUES ('http://localhost:8000', 'Sample api host');
-INSERT INTO apis (url_id, path, method, description)
-VALUES (1, '/users', 'GET', 'Get user data using user name and password');
+INSERT INTO apis (url_id, "key", path, method, description)
+VALUES (1, 'unique_key', '/users', 'POST', 'Get user data using user name and password');
 INSERT INTO schemas (api_id, type)
 VALUES (1, 'object');
 INSERT INTO fields (schema_id, name, type, description)
