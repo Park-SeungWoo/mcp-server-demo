@@ -1,1 +1,2 @@
 from .get_all_schemas_tool import GetAllSchemasTool
+from .get_specific_schema_tool import GetSpecificSchemaTool
