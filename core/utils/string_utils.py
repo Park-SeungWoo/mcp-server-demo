@@ -25,4 +25,13 @@ def snake_to_pascal(s: str) -> str:
     #(where 0 is the first bracket which is non-capturing group
     return new
 
+def snake_to_camel(s: str) -> str:
+    """
+    Convert snake_case to camelCase
+    :param s: original snake_case string
+    :return: converted camelCase string
+    """
+    new =  re.sub(r'_([a-zA-Z])', lambda match: match.group(1).upper(), s)
+    return new
+
 

@@ -2,5 +2,5 @@ from pydantic import BaseModel
 
 
 class Schemas(BaseModel):
-    api_id: int
+    id: str
     type: str

@@ -1,26 +1,17 @@
-[
-  {
-    "url": "http://localhost:8000",
-    "description": "API server responsibility description",
-    "endpoints": [
-      {
-        "method": "POST",
-        "path": "/users",
-        "description": "get user data using user name and password",
-        "schema": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "user name to identify user"
-            },
-            "password": {
-              "type": "string",
-              "description": "user password to verify user"
-            }
-          }
-        }
+{
+  "schema_id1": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "user name to identify user"
+      },
+      "password": {
+        "type": "string",
+        "description": "user password to verify user"
       }
-    ]
+    }
+  },
+  "schema_id2": {
   }
-]
+}
