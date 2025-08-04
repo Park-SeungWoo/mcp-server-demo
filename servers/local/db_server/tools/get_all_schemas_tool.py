@@ -19,55 +19,27 @@ class GetAllSchemasTool(AbstractTool):
             inputSchema={
                 'type': 'object',
                 'properties': {},
-            },
-            outputSchema={  # TODO: validate this structure, it's not match with real output
-                'type': 'array',
-                'items': {
-                    'type': 'object',
-                    'properties': {
-                        'url': {'type': 'string'},
-                        'description': {'type': 'string'},
-                        'endpoints': {
-                            'type': 'array',
-                            'items': {
-                                'type': 'object',
-                                'properties': {
-                                    'method': {'type': 'string'},
-                                    'path': {'type': 'string'},
-                                    'description': {'type': 'string'},
-                                    'schema': {
-                                        'type': 'object',
-                                        'properties': {
-                                            'type': {'type': 'string'},
-                                            'properties': {
-                                                'type': 'object',
-                                                'additionalProperties': {
-                                                    'type': 'object',
-                                                    'properties': {
-                                                        'type': {'type': 'string'},
-                                                        'description': {'type': 'string'}
-                                                    },
-                                                    'required': ['type', 'description']
-                                                }
-                                            }
-                                        },
-                                        'required': ['type', 'properties']
-                                    }
-                                },
-                                'required': ['method', 'path', 'description', 'schema']
-                            }
-                        }
-                    },
-                    'required': ['url', 'description', 'endpoints']
-                }
             }
         )
 
     # @override
-
+    @staticmethod
+    async def execute() -> Any:
+        with psycopg2.connect(
+                host='127.0.0.1',
+                port='5432',
+                database='demo',
+                user='jeremy',
+                password='jeremy'
+        ) as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                result = GetAllSchemasTool.fetch_all(cur)
+                return {
+                    'schemas': [m.model_dump() for m in result]
+                }
 
     @staticmethod
-    def __fetch_all(cur) -> list[BaseModel]:
+    def fetch_all(cur) -> list[BaseModel]:
         result: list = []
         cur.execute("select * from urls")
         urls: list[Urls] = [Urls(**data) for data in cur.fetchall()]
@@ -80,7 +52,6 @@ class GetAllSchemasTool(AbstractTool):
                 schema: Schemas = Schemas(**cur.fetchall()[0])  # fetch schema info
                 cur.execute(f"select * from fields where schema_id={schema.api_id}")
                 fields: list[Fields] = [Fields(**data) for data in cur.fetchall()]
-                print(fields)
                 schema_dto: SchemaDto = SchemaDto(
                     type=schema.type,
                     properties={field.name: {
