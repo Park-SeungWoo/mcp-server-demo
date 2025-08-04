@@ -3,5 +3,6 @@ from pydantic import BaseModel
 
 class Urls(BaseModel):
     id: int
-    url: str
+    host: str
+    port: str
     description: str

@@ -2,7 +2,8 @@ from pydantic import BaseModel
 
 
 class ApiSpecDto(BaseModel):
-    url: str
+    host: str
+    port: str
     description: str
     endpoints: list['EndpointSpecDto']
 

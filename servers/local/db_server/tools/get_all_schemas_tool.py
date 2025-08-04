@@ -70,7 +70,8 @@ class GetAllSchemasTool(AbstractTool):
                 )
             result.append(
                 ApiSpecDto(
-                    url=url.url,
+                    host=url.host,
+                    port=url.port,
                     description=url.description,
                     endpoints=endpoints
                 )
