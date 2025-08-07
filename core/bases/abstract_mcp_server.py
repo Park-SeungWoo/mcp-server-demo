@@ -61,8 +61,8 @@ class AbstractMcpServer(metaclass=ABCMeta):
         @self.server.call_tool()
         async def call_tool(name: str, kwargs: dict) -> Any:
             tool: AbstractTool = getattr(self.tools, strutil.snake_to_pascal(name), None)
-            if tool:  # TODO: exception handling
-                return await tool.execute(**kwargs)  # must handle arg error -> generate custom exception to handle it
+            if tool:  # TODO: argument exception handling
+                return await tool.execute(**kwargs)
             raise ToolNotExistException(name)
 
     def create_initialization_options(self) -> InitializationOptions:
