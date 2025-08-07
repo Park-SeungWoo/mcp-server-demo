@@ -1,9 +1,8 @@
 import inspect
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 from typing import Any
 
 from mcp.server import Server
-from mcp.server.stdio import stdio_server
 from mcp.server.models import InitializationOptions
 from mcp.types import Prompt, Resource, Tool, GetPromptResult
 from pydantic import AnyUrl
@@ -70,16 +69,8 @@ class AbstractMcpServer(metaclass=ABCMeta):
 
     async def run(self):
         self.set_handlers()
-        # print(ANSIStyler.style(f"MCP-{self.__class__.__name__} now running!",  # useless with stdio transport
-        #                        fore_color='light-blue',
-        #                        font_style='bold'
-        #                        ))
-        # print(ANSIStyler.style(str(self.create_initialization_options().model_dump_json(indent=2, exclude_none=True)),
-        #                        fore_color='yellow'
-        #                        ))
-        async with stdio_server() as (read_stream, write_stream):
-            await self.server.run(
-                read_stream,
-                write_stream,
-                self.create_initialization_options()
-            )
+        await self.run_server()
+
+    @abstractmethod
+    async def run_server(self):
+        pass

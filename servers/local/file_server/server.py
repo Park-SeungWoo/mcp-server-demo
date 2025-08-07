@@ -1,9 +1,9 @@
 from mcp.server import InitializationOptions, NotificationOptions
 
-from core.bases import AbstractMcpServer
+from core.bases import AbstractStdioMcpServer
 
 
-class FileServer(AbstractMcpServer):
+class FileServer(AbstractStdioMcpServer):
     def __init__(self):
         super().__init__()
 
