@@ -9,7 +9,7 @@ class PingPongTool(AbstractTool):
     @staticmethod
     def spec() -> Tool:
         return Tool(
-            name='PingPongTool',  # must be snake_case of class name
+            name='ping_pong_tool',  # must be snake_case of class name
             title='ping and pong',
             description='ping and pong pong pong',
             inputSchema={
