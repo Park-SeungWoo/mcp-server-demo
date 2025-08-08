@@ -41,8 +41,8 @@ def parse_args():
         nargs=1,
         help='MCP transport to use'
     )
-    args = parser.parse_args()
-    return args
+    cl_args = parser.parse_args()
+    return cl_args
 
 
 if __name__ == '__main__':
@@ -51,8 +51,9 @@ if __name__ == '__main__':
         print(ANSIStyler.style('Available MCP servers', fore_color='light-blue', font_style='bold'))
         for s in AVAIL_SERVER_OPTIONS:
             print(ANSIStyler.style(f"- {s}", fore_color='blue'))
+        exit(0)
     elif args.server:
-        server_cls: type[AbstractMcpServer] = SERVER_CLS.get(args.server[0])
-        server_cls().run(args.transport[0])
-    else:
-        print(ANSIStyler.style("Please select an available option", fore_color='red'))
+        if server_cls := SERVER_CLS.get(args.server[0]):  # if not server_cls is None, run
+            server_cls().run(args.transport[0])
+        exit(0)
+    print(ANSIStyler.style("Please select an available option", fore_color='red'))
