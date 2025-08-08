@@ -25,7 +25,6 @@ from core.utils import string_utils as strutil
 class AbstractMcpServer(metaclass=ABCMeta):
     def __init__(self):
         self.server: Server = Server(f"{strutil.pascal_to_snake(self.__class__.__name__)}")
-        self.__dynamic_import()
 
     def __dynamic_import(self):
         from pathlib import Path
@@ -44,6 +43,8 @@ class AbstractMcpServer(metaclass=ABCMeta):
             sys.path.remove(str(base_path))
 
     def set_handlers(self):
+        self.__dynamic_import()
+
         @self.server.list_prompts()
         async def list_prompts() -> list[Prompt]:
             pass
