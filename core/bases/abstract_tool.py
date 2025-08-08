@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
+from typing import Any
 
-from mcp.types import Tool, TextContent, ImageContent, EmbeddedResource
+from mcp.types import Tool
 
 
 class AbstractTool(metaclass=ABCMeta):
@@ -11,5 +12,5 @@ class AbstractTool(metaclass=ABCMeta):
 
     @staticmethod
     @abstractmethod
-    async def execute(**kwargs) -> list[TextContent | ImageContent | EmbeddedResource]:
+    async def execute(**kwargs) -> Any:
         raise NotImplementedError("CustomTool.execute() is not implemented")

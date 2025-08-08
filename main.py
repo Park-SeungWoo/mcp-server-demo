@@ -1,9 +1,9 @@
-import asyncio
 import argparse
 import inspect
 
 import servers
 from core.bases import AbstractMcpServer
+from core.enums.transport_enums import TransportEnum
 from core.utils.ansi_styler import ANSIStyler
 
 SERVER_CLS: dict[str, type] = {
@@ -16,6 +16,7 @@ AVAIL_SERVER_OPTIONS: list[str] = [
     for server in SERVER_CLS.values()
     if issubclass(server, AbstractMcpServer)
 ]
+AVAIL_TRANSPORT_OPTIONS: list[TransportEnum] = TransportEnum.all()
 
 
 def parse_args():
@@ -32,6 +33,14 @@ def parse_args():
         action='store_true',
         help='List available MCP servers'
     )
+    parser.add_argument(
+        '--transport', '-T',
+        choices=AVAIL_TRANSPORT_OPTIONS,
+        default=TransportEnum.STDIO,
+        type=TransportEnum,
+        nargs=1,
+        help='MCP transport to use'
+    )
     args = parser.parse_args()
     return args
 
@@ -44,6 +53,6 @@ if __name__ == '__main__':
             print(ANSIStyler.style(f"- {s}", fore_color='blue'))
     elif args.server:
         server_cls: type[AbstractMcpServer] = SERVER_CLS.get(args.server[0])
-        asyncio.run(server_cls().run())
+        server_cls().run(args.transport[0])
     else:
         print(ANSIStyler.style("Please select an available option", fore_color='red'))

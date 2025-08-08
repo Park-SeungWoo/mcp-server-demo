@@ -1,7 +1,7 @@
 import enum
 
 
-class ErrorCode(enum):
+class ErrorCode(enum.Enum):
     # reserved
     ParseError = -32700
     InvalidRequest = -32600
