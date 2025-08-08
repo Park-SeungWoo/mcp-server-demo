@@ -36,7 +36,7 @@ def parse_args():
     parser.add_argument(
         '--transport', '-T',
         choices=AVAIL_TRANSPORT_OPTIONS,
-        default=TransportEnum.STDIO,
+        default=[TransportEnum.STDIO],
         type=TransportEnum,
         nargs=1,
         help='MCP transport to use'
