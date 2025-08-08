@@ -9,13 +9,13 @@ from core.bases import AbstractMcpServer
 class DynamicToolManagementServer(AbstractMcpServer):
     def __init__(self) -> None:
         super().__init__()
-        # TODO: DB connection
+        self.db_connection = None  # TODO: DB connection
 
     def set_handlers(self):
         # TODO: must set prompt, resources also
         @self.server.list_tools()
         async def list_tools() -> list[Tool]:
-            # TODO: get from data store
+            # TODO: get JSON formatted tool spec data from database
             tool1: Tool = Tool(
                 name='first_tool',
                 description='first tool',
@@ -51,6 +51,7 @@ class DynamicToolManagementServer(AbstractMcpServer):
         @self.server.call_tool()
         async def call_tool(tool_name: str, kwargs: dict) -> Any:
             # TODO: handle tool by its name
+            # get api spec from database by tool_name and call it
             return {
                 'pong': tool_name,
                 'recieved': kwargs
