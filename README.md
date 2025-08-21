@@ -13,13 +13,13 @@
 dependency 설치와 환경 세팅을 위해 아래 명령어를 실행합니다.
 
 ```shell
-  uv sync
+uv sync
 ```
 
 ### SSE Transport
 SSE 서버는 아래 커맨드를 이용해 우선 서버를 실행 해야합니다.
 ```shell
-  uv run -s main.py -S DynamicToolManagementServer -T sse
+uv run -s main.py -S DynamicToolManagementServer -T sse
 ```
 이후 MCP client에서는 아래의 endpoint specifier로 해당 MCP 서버와 연결할 수 있습니다.
 
@@ -109,10 +109,5 @@ servers/
 - `-L` 또는 `-S` 옵션으로 서버 정보를 확인할 때, 여기서만 정보를 가져오기 때문에 등록되지 않은 서버는 외부에 표시되지 않습니다.
 
 
-## Demo Video
-MCP 서버 연결 테스트는 postman을 이용해 진행했습니다.
-
-### FileServer with stdio transport
-
-
-### FileServer with sse
+## MCP Client
+MCP 서버 연결 테스트는 postman을 이용해 수행할 수 있습니다.
