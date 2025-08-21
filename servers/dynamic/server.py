@@ -54,5 +54,5 @@ class DynamicToolManagementServer(AbstractMcpServer):
             # get api spec from database by tool_name and call it
             return {
                 'pong': tool_name,
-                'recieved': kwargs
+                'received': kwargs
             }
