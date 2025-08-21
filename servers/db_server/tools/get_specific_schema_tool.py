@@ -6,7 +6,6 @@ from mcp.types import Tool
 
 from core.bases import AbstractTool
 from core.utils.string_utils import snake_to_camel
-from servers.stdio.db_server.dtos.mapped import *
 
 
 class GetSpecificSchemaTool(AbstractTool):
