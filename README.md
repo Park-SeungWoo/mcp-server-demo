@@ -24,11 +24,11 @@ STDIO 연결 방식을 선택할 경우 아래의 endpoint specifier를 MCP clie
 
 ## Command Line Options
 
-| Option        | Alias | Description                    | Available                                                         | Default |
-|---------------|-------|--------------------------------|-------------------------------------------------------------------|---------|
-| `--list`      | `-L`  | Show available MCP Servers     | None                                                              | None    |
-| `--server`    | `-S`  | Select server to start         | Output of `-L` or [here](#sample-servers-using-abstractmcpserver) | None    |
-| `--transport` | `-T`  | Select server transport option | `sse`, `stdio`                                                    | `stdio` |
+| Option        | Alias | Description                    | Available                                           | Default |
+|---------------|-------|--------------------------------|-----------------------------------------------------|---------|
+| `--list`      | `-L`  | Show available MCP Servers     | None                                                | None    |
+| `--server`    | `-S`  | Select server to start         | Output of `-L` or [Here](#sample-servers-available) | None    |
+| `--transport` | `-T`  | Select server transport option | `sse`, `stdio`                                      | `stdio` |
 
 
 ## Sample servers available
