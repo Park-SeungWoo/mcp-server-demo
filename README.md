@@ -7,6 +7,15 @@
 
 ## Run & Connect to the Servers
 
+### Project Env Setting
+
+`uv` 를 이용한 프로젝트 관리를 하고 있습니다.  
+dependency 설치와 환경 세팅을 위해 아래 명령어를 실행합니다.
+
+```shell
+  uv sync
+```
+
 ### SSE Transport
 SSE 서버는 아래 커맨드를 이용해 우선 서버를 실행 해야합니다.
 ```shell
@@ -24,7 +33,7 @@ STDIO 연결 방식을 선택할 경우 아래의 endpoint specifier를 MCP clie
 
 ## Command Line Options
 
-| Option        | Alias | Description                    | Available                                           | Default |
+| Option        | Alias | Description                    | Available value                                     | Default |
 |---------------|-------|--------------------------------|-----------------------------------------------------|---------|
 | `--list`      | `-L`  | Show available MCP Servers     | None                                                | None    |
 | `--server`    | `-S`  | Select server to start         | Output of `-L` or [Here](#sample-servers-available) | None    |
@@ -33,15 +42,16 @@ STDIO 연결 방식을 선택할 경우 아래의 endpoint specifier를 MCP clie
 
 ## Sample servers available
 
-| Name                          | Path                  | Description                                                                                                                                |
-|-------------------------------|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| `SampleSSEServer`             | sample_sse/server.py  | Temporary server added while developing command-line transport option. Currently supports both SSE and STDIO transports for every servers. |
-| `FileServer`                  | file_server/server.py | Server to modify files on the host machine; primarily for testing STDIO transport.                                                         |
-| `DBServer`                    | db_server/server.py   | Server connected to a PostgreSQL database with read-only tools.                                                                            |
-| `DynamicToolManagementServer` | dynamic/server.py     | Server demonstrating dynamically changing tools.                                                                                           |
+| Name                          | Path                  | Description                                                                                                                               |
+|-------------------------------|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `SampleSSEServer`             | sample_sse/server.py  | Temporary server added while developing command-line transport option. Currently supports both SSE and STDIO transports for every server. |
+| `FileServer`                  | file_server/server.py | Server to modify files on the host machine; primarily for testing STDIO transport.                                                        |
+| `DBServer`                    | db_server/server.py   | Server connected to a PostgreSQL database with read-only tools.                                                                           |
+| `DynamicToolManagementServer` | dynamic/server.py     | Server demonstrating dynamically changing tools.                                                                                          |
 
 > [!IMPORTANT]
-> DBServer requires starting a PostgreSQL container in advance using `docker-compose.db.yml`.
+> DBServer requires starting a PostgreSQL container in advance using `docker-compose.db.yml`.  
+> Simply, run `./start.sh` and `./stop.sh`
 
 
 ## Add New MCP Server
@@ -51,7 +61,7 @@ MCP Server는 각각 하나의 plugin으로 취급됩니다.
 
 ### 1. 서버 폴더 구조
 
-모든 서버는 `servers/` 내에 별도의 폴더를 만들고, 다음 구조를 갖춰야 합니다.
+모든 서버는 `servers/` 내에서 별도의 폴더로 구분되는것이 권장되며, 다음 구조를 갖춰야 합니다.
 ```
 servers/
 ├─ server_name/
@@ -67,7 +77,7 @@ servers/
 ```
 
 > [!NOTE]  
-> prompts/와 resources/는 현재 미구현 상태이며, 폴더 구조만 갖춰져 있습니다.  
+> `prompts/` 와 `resources/` 는 현재 미구현 상태이며, 폴더 구조만 갖춰져 있습니다.  
 > 필요할 경우 추후 구현할 예정입니다.
 
 ### 2. 서버 클래스 구현
@@ -82,7 +92,7 @@ servers/
 
 > [!NOTE]  
 > 현재 prompt와 resource 인터페이스는 존재하지 않습니다.  
-> tools/ 폴더 내 모든 tool 클래스는 `tools/__init__.py`에서 import 되어야 합니다.
+> `tools/` 폴더 내 모든 tool 클래스는 `tools/__init__.py`에서 import 되어야 합니다.
 
 > [!IMPORTANT]  
 > spec() 메서드를 재정의할 때 Tool 객체를 반환해야 하며, 이 과정에서 tool의 식별자로 이용되는 tool_name은 반드시 tool 클래스 이름의 **snake_case** 형태여야 합니다.  
@@ -97,3 +107,12 @@ servers/
 
 - 최종적으로 사용 가능한 서버는 `servers/__init__.py`에서 `./server_name/server.py`에 정의된 해당 서버 클래스를 import 해야 합니다.  
 - `-L` 또는 `-S` 옵션으로 서버 정보를 확인할 때, 여기서만 정보를 가져오기 때문에 등록되지 않은 서버는 외부에 표시되지 않습니다.
+
+
+## Demo Video
+MCP 서버 연결 테스트는 postman을 이용해 진행했습니다.
+
+### FileServer with stdio transport
+
+
+### FileServer with sse
