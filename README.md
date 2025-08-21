@@ -1,13 +1,9 @@
-# MCP Server Demo
-<span style="color: gray;">Demo MCP Server for PoC</span>
-
 ## Main logics for framework-like server code
 기구현 코드의 구조를 만든 메인 로직은 아래 파일들에 담겨있습니다.
 - `core/bases/abstract_mcp_server.py`
 - `core/bases/abstract_tool.py`
 - `main.py`
 
----
 
 ## Run & Connect to the Servers
 
@@ -25,7 +21,6 @@ STDIO 연결 방식을 선택할 경우 아래의 endpoint specifier를 MCP clie
 
 `uv run --directory path/to/proj/root -s main.py -S FileServer`
 
----
 
 ## Command Line Options
 
@@ -35,7 +30,6 @@ STDIO 연결 방식을 선택할 경우 아래의 endpoint specifier를 MCP clie
 | `--server`    | `-S`  | Select server to start         | Output of `-L` or [here](#sample-servers-using-abstractmcpserver) | None    |
 | `--transport` | `-T`  | Select server transport option | `sse`, `stdio`                                                    | `stdio` |
 
----
 
 ## Sample servers available
 
@@ -49,7 +43,6 @@ STDIO 연결 방식을 선택할 경우 아래의 endpoint specifier를 MCP clie
 > [!IMPORTANT]
 > DBServer requires starting a PostgreSQL container in advance using `docker-compose.db.yml`.
 
----
 
 ## Add New MCP Server
 
